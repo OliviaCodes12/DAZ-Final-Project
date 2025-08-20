@@ -2,11 +2,19 @@
 # -------------------------------
 # Step 1: Setup & Libraries
 # -------------------------------
-from pytrends.request import TrendReq
+
+%pip install matplotlib
+%pip install seaborn
+%pip install scipy
+
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import pearsonr
+
+%pip install pytrends
+from pytrends.request import TrendReq  # <-- Add this import
 
 # -------------------------------
 # Step 2: Data Gathering
@@ -46,6 +54,10 @@ gdragon_corrs = {
     for kw in keywords if kw != "G-Dragon"
 }
 
+print("Correlation with G-Dragon:")
+for k, v in gdragon_corrs.items():
+    print(f"{k}: {v:.3f}")
+
 # -------------------------------
 # Step 5: Data Visualisation
 # -------------------------------
@@ -55,11 +67,15 @@ for col in data.columns:
     plt.plot(data.index, data[col], label=col)
 plt.title("Google Search Trends (2018)")
 plt.legend()
+plt.tight_layout()
 plt.show()
 
 # Correlation heatmap
 plt.figure(figsize=(6,5))
 sns.heatmap(corr_matrix, annot=True, cmap="coolwarm")
 plt.title("Correlation Matrix of Search Trends (2018)")
+plt.tight_layout()
 plt.show()
+
+  
 
